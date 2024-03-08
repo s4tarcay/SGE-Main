@@ -201,10 +201,7 @@ namespace SGE.Controllers
                 // Exibe a imagem na view
                 ViewData["Imagem"] = imageBase64;
             }
-
-            Guid idTipo = _context.TiposUsuario.Where(a => a.Tipo == "Aluno")
-                                                .FirstOrDefault().TipoUsuarioId;
-            ViewData["TipoUsuarioId"] = idTipo;
+            ViewData["TipoUsuarioId"] = new SelectList(_context.TiposUsuario, "TipoUsuarioId", "TipoUsuarioId", aluno.TipoUsuarioId);
             return View(aluno);
         }
 
@@ -219,15 +216,15 @@ namespace SGE.Controllers
             {
                 return NotFound();
             }
-
             if (aluno.Senha != ConfirmeSenha)
             {
                 ViewData["Erro"] = "As Senhas não conferem!";
-                var fotoUrl = Path.Combine(Directory.GetCurrentDirectory(), "Data\\Content\\Photo", aluno.UrlFoto);
-                if (System.IO.File.Exists(fotoUrl))
+                // Verifica se a imagem existe
+                var filePath1 = Path.Combine(Directory.GetCurrentDirectory(), "Data\\Content\\Photo", aluno.UrlFoto);
+                if (System.IO.File.Exists(filePath1))
                 {
                     // Carrega a imagem em memória
-                    var imageBytes = await System.IO.File.ReadAllBytesAsync(fotoUrl);
+                    var imageBytes = await System.IO.File.ReadAllBytesAsync(filePath1);
                     var imageBase64 = Convert.ToBase64String(imageBytes);
 
                     // Exibe a imagem na view
@@ -237,9 +234,9 @@ namespace SGE.Controllers
                 return View(aluno);
             }
 
+
             if (ModelState.IsValid)
             {
-
                 Usuario usuario = _context.Usuarios.Where(a => a.Email == aluno.Email).FirstOrDefault();
                 if (aluno.CadAtivo == false)
                 {
@@ -253,23 +250,34 @@ namespace SGE.Controllers
                     usuario.CadAtivo = true;
                     usuario.CadInativo = null;
                 }
+                try
+                {
+                    usuario.UsuarioNome = aluno.AlunoNome;
+                    usuario.Email = aluno.Email;
+                    usuario.Senha = aluno.Senha;
+                    usuario.Celular = aluno.Celular;
+                    usuario.TipoUsuarioId = _context.TiposUsuario.Where(a => a.Tipo == "Aluno").FirstOrDefault().TipoUsuarioId;
+                    usuario.TipoUsuario = _context.TiposUsuario.Where(a => a.Tipo == "Aluno").FirstOrDefault();
+                    _context.Alunos.Update(aluno);
+                    await _context.SaveChangesAsync();
+                    _context.Usuarios.Update(usuario);
+                    await _context.SaveChangesAsync();
 
-                aluno.TipoUsuarioId = _context.TiposUsuario.Where(a => a.Tipo == "Aluno").FirstOrDefault().TipoUsuarioId;
-                aluno.TipoUsuario = _context.TiposUsuario.Where(a => a.Tipo == "Aluno").FirstOrDefault();
-                usuario.UsuarioNome = aluno.AlunoNome;
-                usuario.Email = aluno.Email;
-                usuario.Senha = aluno.Senha;
-                usuario.Celular = aluno.Celular;
-                usuario.TipoUsuarioId = _context.TiposUsuario.Where(a => a.Tipo == "Aluno").FirstOrDefault().TipoUsuarioId;
-                usuario.TipoUsuario = aluno.TipoUsuario;
-                _context.Update(aluno);
-                _context.Usuarios.Update(usuario);
-                await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AlunoExists(aluno.AlunoId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            Guid idTipo = _context.TiposUsuario.Where(a => a.Tipo == "Aluno")
-                                                .FirstOrDefault().TipoUsuarioId;
-            ViewData["TipoUsuarioId"] = idTipo;
+            // Verifica se a imagem existe
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data\\Content\\Photo", aluno.UrlFoto);
             if (System.IO.File.Exists(filePath))
             {
@@ -280,9 +288,9 @@ namespace SGE.Controllers
                 // Exibe a imagem na view
                 ViewData["Imagem"] = imageBase64;
             }
+            ViewData["TipoUsuarioId"] = new SelectList(_context.TiposUsuario, "TipoUsuarioId", "TipoUsuarioId", aluno.TipoUsuarioId);
             return View(aluno);
         }
-
 
         // GET: Alunos/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
@@ -345,39 +353,41 @@ namespace SGE.Controllers
             return _context.Alunos.Any(e => e.AlunoId == id);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AlterarFoto(Guid id, IFormFile novaFoto)
         {
-            Aluno aluno = _context.Alunos.Find(id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Aluno aluno = await _context.Alunos.FindAsync(id);
             if (novaFoto != null && novaFoto.Length > 0)
             {
                 var fileName = aluno.AlunoId.ToString(); // Gera um novo nome para a imagem
                 var fileExtension = Path.GetExtension(novaFoto.FileName); // Pega a extensão do arquivo
                 var newFileName = fileName + fileExtension; // Novo nome do arquivo
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data\\Content\\Photo", newFileName); // Caminho do arquivo
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                                            "Data\\Content\\Photo", newFileName); // Caminho do arquivo
 
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await novaFoto.CopyToAsync(fileStream); // Salva a imagem no caminho especificado
                 }
                 aluno.UrlFoto = newFileName; // Atualiza o campo UrlFoto com o novo nome do arquivo
-                _context.Update(aluno);
-                await _context.SaveChangesAsync();
+                _context.Alunos.Update(aluno); // Atualiza o aluno no banco de dados
+                await _context.SaveChangesAsync(); // Salva as alterações no banco de dados
 
-                var imageBytes = await System.IO.File.ReadAllBytesAsync(filePath);
-                var imageBase64 = Convert.ToBase64String(imageBytes);
+                /** Exibe a nova imagem na view **/
+                var imageBytes = await System.IO.File.ReadAllBytesAsync(filePath); // Carrega a imagem em memória
+                var imageBase64 = Convert.ToBase64String(imageBytes); // Converte a imagem para Base64
+                ViewData["Imagem"] = imageBase64; // Exibe a imagem na view
 
-                // Exibe a imagem na view
-                ViewData["Imagem"] = imageBase64;
             }
-
             Guid idTipo = _context.TiposUsuario.Where(a => a.Tipo == "Aluno")
-                                                .FirstOrDefault().TipoUsuarioId;
-            ViewData["TipoUsuarioId"] = idTipo;
-            return View("Edit", aluno);
+                                               .FirstOrDefault().TipoUsuarioId;
+            // Busca o id do tipo de usuário
+            ViewData["TipoUsuarioId"] = idTipo; // Exibe o id do tipo de usuário na view
+            return View("Edit", aluno); // Retorna a view de edição (Edit.cshtml) do aluno
         }
-
-
     }
 }
