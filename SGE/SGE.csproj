@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\imagem\**" />
+    <Content Remove="wwwroot\imagem\**" />
+    <EmbeddedResource Remove="wwwroot\imagem\**" />
+    <None Remove="wwwroot\imagem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\Button.cs" />
   </ItemGroup>
 
@@ -30,10 +37,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\reservas.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\imagem\" />
   </ItemGroup>
 
 </Project>
