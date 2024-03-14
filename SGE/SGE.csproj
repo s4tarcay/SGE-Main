@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\imagem\**" />
+    <Content Remove="wwwroot\imagem\**" />
+    <EmbeddedResource Remove="wwwroot\imagem\**" />
+    <None Remove="wwwroot\imagem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Button.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.2" />
     <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.11.0" />
     <PackageReference Include="jQuery" Version="3.7.1" />
