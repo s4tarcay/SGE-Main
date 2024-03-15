@@ -3,10 +3,11 @@
 @{
     ViewData["Title"] = "Delete";
 }
-
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<div class="text-white">
+    <h1>Delete</h1>
+</div>
+<div class="text-white">
+<h3>Are you sure you want to delete this?</h3> </div>
 @if (ViewData["Erro"] != null)
 {
     <div class="row d-flex justify-content-center mt-5">
@@ -18,7 +19,7 @@
         </div>
     </div>
 }
-<div>
+<div class="text-white">
     <h4>TipoUsuario</h4>
     <hr />
     <dl class="row">
