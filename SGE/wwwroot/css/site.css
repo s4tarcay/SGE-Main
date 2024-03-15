@@ -19,9 +19,8 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-image: linear-gradient(#265073,#2D9596,#9AD0C2);
-    
-
+        background: linear-gradient(#265073,#2D9596,#9AD0C2);
+   
 }
 
 
@@ -29,12 +28,12 @@ body {
     height: 150px;
     width: 100%;
     background-color:white;
-    box-shadow: 10px 10px lightblue;
+    box-shadow: 9px 9px lightblue;
 }
 
 .botao{
     display:flex;
     justify-content:end;
- 
-        
+     
 }
+
