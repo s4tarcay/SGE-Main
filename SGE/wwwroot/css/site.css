@@ -19,14 +19,21 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-image: linear-gradient(#265073,#2D9596,#9AD0C2);
-    
-
-}
-
-
-.cardPersonalizado{
-    height: 150px;
-    width: 100%;
+        background: linear-gradient(#265073,#2D9596,#9AD0C2);
    
 }
+
+
+.cardPersonalizado {
+    height: 150px;
+    width: 100%;
+    background-color:white;
+    box-shadow: 9px 9px lightblue;
+}
+
+.botao{
+    display:flex;
+    justify-content:end;
+     
+}
+

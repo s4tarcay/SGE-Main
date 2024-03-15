@@ -26,7 +26,7 @@
                 {
                     <div class="d-flex">
                         <a class="btn btn-outline-light text-dark" asp-area="" asp-controller="Usuarios" asp-action="SelecionaTipo" asp-route-id="@Context.Session.GetString("usuarioId")">Olá, @Context.Session.GetString("usuario") </a>
-                        <a class="btn btn-outline-light text-dark" asp-area="" asp-controller="Home" asp-action="Logout"> Logout</a>
+                        <a class=" btn btn-outline-light text-dark" style="display:flex; flex-wrap:wrap; align-content:center " asp-area="" asp-controller="Home" asp-action="Logout"> Logout</a>
                     </div>
                 }
             </div>
@@ -39,7 +39,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="d-flex justify-content-center container">
             &copy; Feito por Murilo com 💖- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
@@ -48,154 +48,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-
-
-    <div class="d-flex gap-4 justify-content-center  " >
-
-
-
-        <button class="border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-"  >
-       
-            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-
-        </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-            <a asp-area="" asp-controller="TiposUsuario" asp-action="Index">Tipos de Usuários</a>
-
-
-        </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-
-"  >
         
-            <a  asp-area="" asp-controller="" asp-action="Index">Usuários</a>
-        
-    </button>
-        <button class=" border-0 bg-info rounded-1 
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-        
-            <a  asp-area="" asp-controller="Alunos" asp-action="Index">Alunos</a>
-      
-    </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-        
-            <a  asp-area="" asp-controller="Turmas" asp-action="Index">Turmas</a>
-        
-    </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-        
-            <a  asp-area="" asp-controller="AlunosTurma" asp-action="ListaAlunos">Alunos por Turma</a>
-        
-    </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-            <a  asp-area="" asp-controller="Salas" asp-action="Index">Salas</a>
-        
-    </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-        
-            <a  asp-area="" asp-controller="ReservasSala" asp-action="Reservas">Reservas de Sala</a>
-        
-    </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-        
-            <a  asp-area="" asp-controller="TiposOcorrencia" asp-action="Index">Tipos de Ocorrência</a>
-        
-    </button>
-        <button class=" border-0 bg-info rounded-1
-" style="width:20em;
- 
-
-
-
-
-
-
-" >
-        
-            <a  asp-area="" asp-controller="Ocorrencias" asp-action="Index">Ocorrências</a>
-        
-    </button>
-    </div>
-
 </body>
 
 </html>
