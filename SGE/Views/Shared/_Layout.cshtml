@@ -26,7 +26,7 @@
                 {
                     <div class="d-flex">
                         <a class="btn btn-outline-light text-dark" asp-area="" asp-controller="Usuarios" asp-action="SelecionaTipo" asp-route-id="@Context.Session.GetString("usuarioId")">Olá, @Context.Session.GetString("usuario") </a>
-                        <a class="btn btn-outline-light text-dark" asp-area="" asp-controller="Home" asp-action="Logout"> Logout</a>
+                        <a class=" btn btn-outline-light text-dark" style="display:flex; flex-wrap:wrap; align-content:center " asp-area="" asp-controller="Home" asp-action="Logout"> Logout</a>
                     </div>
                 }
             </div>
@@ -38,8 +38,8 @@
         </main>
     </div>
 
-    <footer class="d-flex justify-content-center  border-top footer text-muted">
-        <div class="container text-center">
+    <footer class="border-top footer text-muted">
+        <div class="d-flex justify-content-center container">
             &copy; Feito por Murilo com 💖- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
@@ -48,9 +48,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-
-
-
+        
 </body>
 
 </html>
