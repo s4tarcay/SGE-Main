@@ -29,6 +29,12 @@ body {
     height: 150px;
     width: 100%;
     background-color:white;
-    
     box-shadow: 10px 10px lightblue;
+}
+
+.botao{
+    display:flex;
+    justify-content:end;
+ 
+        
 }
