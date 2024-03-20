@@ -8,25 +8,25 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SGE.styles.css" asp-append-version="true" />
 
-</head> 
+</head>
 <body>
 
     <header>
         <nav class="d-flex rounded-bottom-4 navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid" style="width=100%;">
-                 <a class="navbar-brand" style="display: flex;width:100% ;
-   
+                <a class="navbar-brand" style="display: flex;width:100% ;
+
 }" asp-area="" asp-controller="Home" asp-action="Index">Sistema de Gestão Escolar ➡️ SGE</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-               
+
                 @if (Context.Session.GetString("usuario") != null)
                 {
                     <div class="d-flex">
                         <a class="btn btn-outline-light text-dark" asp-area="" asp-controller="Usuarios" asp-action="SelecionaTipo" asp-route-id="@Context.Session.GetString("usuarioId")">Olá, @Context.Session.GetString("usuario") </a>
-                        <a class="btn btn-outline-light text-dark" asp-area="" asp-controller="Home" asp-action="Logout"> Logout</a>
+                        <a class=" btn btn-outline-light text-dark" style="display:flex; flex-wrap:wrap; align-content:center " asp-area="" asp-controller="Home" asp-action="Logout"> Logout</a>
                     </div>
                 }
             </div>
@@ -39,7 +39,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="d-flex justify-content-center container">
             &copy; Feito por Murilo com 💖- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
@@ -48,7 +48,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-    
+        
 </body>
 
 </html>
