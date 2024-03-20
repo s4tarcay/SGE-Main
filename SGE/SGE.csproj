@@ -36,6 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Usuarios\Create.cshtml" />
+    <None Include="Views\Usuarios\Delete.cshtml" />
+    <None Include="Views\Usuarios\Details.cshtml" />
+    <None Include="Views\Usuarios\Edit.cshtml" />
+    <None Include="Views\Usuarios\Index.cshtml" />
     <None Include="wwwroot\js\reservas.js" />
   </ItemGroup>
 
